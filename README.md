@@ -9,16 +9,18 @@ Why?
 
 For some reason the default layout on this numberpad did not output number pad code.
 
-Planck TMK
+TMK OneKey
 ----------
 
-This was built on top of the Planck firmware made by Jack Humbert.
+This was built on top of the OneKey firmware: https://github.com/tmk/tmk_keyboard/tree/master/keyboard/onekey
+
+Due to using this as a guide for the ProMicro: https://hackaday.io/project/8282-alpen-clack/log/27475-use-a-pro-micro-in-a-keyboard
 
 
 Build
 -----
 
-Paste these file over the ones found in the Planck sub directory.
+Paste these file over the ones found in the OneKey sub directory.
 
    make
 
@@ -32,23 +34,26 @@ Flashing
 
 Software:
 
+* Arduino: https://www.arduino.cc/en/Main/Software
 * Drivers: https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hookup-guide
-* Loader: http://xloader.russemotto.com/
-* Putty: http://selfmod.net/using-usb-to-serial-converter-in-windows-7-with-putty/
 
 Steps:
 
-1) Connect the Pro Micro to USB
-2) Point it at the downloaded drivers if it doesn't install automatically
-3) Open the device manager to see what COM port it connected on - e.g. COM7
-4) Open a putty serial connection at that port at 1200
-5) When you close this connection, the Pro Micro will go into bootloader
-6) Check in the device manager, the Pro Micro will be connected on a different port for a few seconds - e.g. COM8
-7) Add this line to `devices.txt` in the XLoader folder: `Leonardo(32U4);atmega32U4;avr109;57600`
-8) Set up the XLoader with the bootloader port - e.g. COM8
-9) Repeat the putty connection
-10) When you close the connection, be ready to click 'Upload' on XLoader
-
+1. Connect the Pro Micro to USB
+2. Point it at the downloaded drivers if it doesn't install automatically
+3. Open the device manager in preperation, find the "Ports (COM& LPT)" section and note which deviced are already connected
+4. Put the Pro Mirco into bootloader by shorting the pins RST and GND:
+   - Use a pair of tweezers
+   - Squeeze them to about the right distance
+   - Touch RST and GND with the two ends of it
+   - Lift one side
+   - Put the lifted up side back on the pad
+   - Lift the whole tweezer
+5. You should notice a new port open in the device manager
+6. Use the port number in the `flash.ps1` file
+   - In the example there is `-P com4`
+   - You need to change all the paths to match your enviroment
+7. When executing the flash you should see the Pro Micro light up red, a lot of scrolling text in the console and then a confirmation of the flash shortly after
 
 ### For Linux
 
